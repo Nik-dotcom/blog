@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p align="center">
+    <img src="{{ post.img.url }}" alt="{{ post.title }}" width="50%" />
+  </p>
+
+  <div class="item">
+    <div class="text left">
+      <p>{{ post.content }}</p>
+      <p>Автор:{{ post.author }}</p>
+    </div>
+    <div class="cl">&nbsp;</div>
+  </div>
+{% endblock %}
+{% block comments %}
+  <div class="form-comment">
+    {% if user.is_authenticated %}
+      <h3>Оставить комментарий</h3>
+      <div>
+        <form action="{% url 'add_comments' post.id %}" method="post">
+          {% csrf_token %}
+          <label for="">Ваш комментарий</label>
+          <textarea name="text_comments" id="text_comments" cols="30" rows="10"></textarea>
+          <input type="submit" value="Отправить" />
+        </form>
+      </div>
+    {% else %}
+      <div>
+        <p>Для того что бы оставть комментарий вам нужно авторизоваться либо зарегистрироваться</p>
+      </div>
+    {% endif %}
+  </div>
+  <div class="comments">
+    {% for comment in post.comments_set.all %}
+      <div class="item">
+        <h4>{{ comment.user }}</h4>
+        <p>{{ comment.text_comments }}</p>
+        <p>{{ comment.created }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

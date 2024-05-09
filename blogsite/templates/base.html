@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE >
+<html>
+  <head>
+    <title>Мой блог</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
+    <link rel="shortcut icon" href="css/images/favicon.ico" />
+  </head>
+  <body>
+    <div class="shell">
+      <div class="border">
+        <header>
+          <div id="navigation">
+            <ul>
+              <li>
+                <a href="/" class="active">Главная</a>
+              </li>
+              <li>
+                <a href="/admin">Админ панель</a>
+              </li>
+              {% if request.user.is_authenticated %}
+                <li>
+                  <a href="{% url 'add_post' %}">Добавить запись</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+          <div class="profile">
+            {% if request.user.is_authenticated %}
+              <span>Hi {{ request.user.username|title }}</span>
+              <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a href="{% url 'login' %}">Login</a>/<a href="{% url 'register' %}">register</a>
+            {% endif %}
+          </div>
+        </header>
+
+        <div id="main">
+          <div id="content" class="left">
+            <div class="projects">
+              {% block content %}
+
+              {% endblock %}
+            </div>
+          </div>
+
+          <div class="cl">&nbsp;</div>
+          {% block comments %}
+
+          {% endblock %}
+        </div>
+      </div>
+
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

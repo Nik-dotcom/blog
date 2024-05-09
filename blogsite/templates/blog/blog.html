@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Записи</h3>
+  {% for post in post_list %}
+    <div class="item">
+      <div class="image left">
+        <a href="#"><img src="{{ post.img.url }}" alt="{{ post.title }}" width="200px" height="100px" /></a>
+      </div>
+      <div class="text left">
+        <a href="{{ post.id }}/"><h4>{{ post.title }}</h4></a>
+        <p>{{ post.content }}</p>
+        <p>Автор:{{ post.author }}</p>
+      </div>
+      <div class="cl">&nbsp;</div>
+    </div>
+  {% endfor %}
+{% endblock %}
